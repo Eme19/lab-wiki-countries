@@ -5,8 +5,8 @@ import { useState, useEffect } from "react"
 
 
 function Countrydetails(props){
-    const [countrie, setCountriess ] = useState(null)
-    const [isLoading, setIsLoading]= useState(false)
+    const [countrie, setCountriess ] = useState(countries)
+    const [isLoading, setIsLoading]= useState(true)
 
    const {countryId} = useParams();
 
@@ -14,59 +14,62 @@ function Countrydetails(props){
    console.log("====>", countryId) 
 
 useEffect(()=> {
-const oneCountry = countries.find((country)=> country._id === countryId )
+const oneCountry = countries.filter((country)=> country.alpha3Code === countryId )
 console.log("===show=>", oneCountry) 
 setCountriess(oneCountry)
-setIsLoading(true)
+setIsLoading(false)
 console.log("let me see you please  haha ", oneCountry) 
 
 },[countryId])
 
 if(countrie === null && isLoading === false) {
-  return <p>Loading..</p>
-}
+    return <p>Loading..</p>
+  }
+
 
     return (
-        <div>
-            <h1>Country Details</h1>
+<>
+        {!isLoading && 
+            
+        <div className="col-7">
             <div className="col-7">
-                {!isLoading && <h1>Country Details not Found!</h1>}
-                {isLoading && 
-            <><h1>{countrie.name.official}</h1><table className="table">
+            <><h1>{countrie.name}</h1>
+                   <table className="table">
                         <thead></thead>
                         <tbody>
                             <tr>
                                 <td width={30}>Capital</td>
-                                <td>{countrie.capital}</td>
+                                <td>{countrie[0].capital}</td>
                             </tr>
                             <tr>
                                 <td>Area</td>
                                 <td>
-                                {countrie.area}
+                                {countrie[0].area}
                                     <sup>2</sup>
                                 </td>
                             </tr>
                             <tr>
-                                <td>{countrie.border}</td>
+                                <td>Border</td>
                                 <td>
+                                
                                     <ul>
-                                        <li><a href="/AND">Andorra</a></li>
-                                        <li><a href="/BEL">Belgium</a></li>
-                                        <li><a href="/DEU">Germany</a></li>
-                                        <li><a href="/ITA">Italy</a></li>
-                                        <li><a href="/LUX">Luxembourg</a></li>
-                                        <li><a href="/MCO">Monaco</a></li>
-                                        <li><a href="/ESP">Spain</a></li>
-                                        <li><a href="/CHE">Switzerland</a></li>
+
+                                  {countrie[0].borders.map((border)=> {
+                                    console.log(border)
+                                    const countryBorders = countries.find((newcountry)=> newcountry.alpha3Code === border )
+                                    return <li><Link to={`/${border}`}>{countryBorders.name.common}</Link></li>
+                                  })}
                                     </ul>
                                 </td>
                             </tr>
                         </tbody>
-                </table></>}
-                <Link to="/">Back</Link>
+                </table></>
           </div>
+        
+    
        
-        </div>
+        </div>}
+        </>
     )
 }
 

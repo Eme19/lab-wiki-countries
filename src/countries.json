@@ -137,7 +137,7 @@
   },
 
 
-  
+
   {
     "name": {
       "common": "Afghanistan",
@@ -270,7 +270,7 @@
     },
     "latlng": [33, 65],
     "landlocked": true,
-    "borders": ["IRN", "PAK", "TKM", "UZB", "TJK", "CHN"],
+    "borders": ["IRN", "PAK", "TKM", "UZB", "TJK", "CHN"], 
     "area": 652230,
     "demonyms": {
       "eng": {
